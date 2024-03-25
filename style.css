@@ -197,6 +197,8 @@ main .supporting-img.hidden:not(.show) {
 /* Scroll animation */
 .hidden {
   opacity: 0;
+  transition: none;
+  transition-delay: none;
 }
 
 .show {
@@ -397,28 +399,22 @@ main .supporting-img.hidden:not(.show) {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
   gap: 25px;
 }
 
 #events .card {
-  --child: 0;
   --width: 250px;
   width: var(--width);
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
   border-radius: 1px;
+  background-color: white;
   border: 1px solid rgb(241, 241, 241);
 }
 
 #events .card.hidden:not(.show) {
-  filter: blur(5px);
-  transform: translateX(calc((var(--width) * var(--child)) * 1px));
-}
-
-#events .card.show {
-  filter: blur(0px);
-  transition-delay: calc(0.2s * var(--child));
+  transform: translateX(-100%);
 }
 
 #events .card .content {
@@ -453,10 +449,6 @@ main .supporting-img.hidden:not(.show) {
 #events .card img {
   object-fit: cover;
   width: 100%;
-}
-
-#events .card.hidden:not(.show) {
-  transform: translateX(-100%);
 }
 
 #contact {
@@ -528,6 +520,42 @@ main .supporting-img.hidden:not(.show) {
 @media only screen and (max-width: 1150px) {
   #events .card {
     --width: 220px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #contact .content {
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+    margin: auto;
+    margin-top: var(--top-padding);
+    gap: 20px;
+  }
+
+  #contact .content h3 {
+    font-size: 25px;
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+
+  #contact .content img {
+    width: 150px;
+    height: 150px;
+  }
+
+  #contact .content .whatsapp::after {
+    margin-left: 5px;
+    font-weight: 600;
+    left: 100%;
+    bottom: 50%;
+    transform: translate(0%, 50%);
+  }
+
+  #contact .details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -612,31 +640,6 @@ main .supporting-img.hidden:not(.show) {
 
   #events .card {
     --width: 350px;
-  }
-
-  #contact .content {
-    flex-direction: column;
-    align-items: start;
-    gap: 20px;
-  }
-
-  #contact .content h3 {
-    font-size: 25px;
-    word-break: break-all;
-    word-wrap: break-word;
-  }
-
-  #contact .content img {
-    width: 150px;
-    height: 150px;
-  }
-
-  #contact .content .whatsapp::after {
-    margin-left: 5px;
-    font-weight: 600;
-    left: 100%;
-    bottom: 50%;
-    transform: translate(0%, 50%);
   }
 
   .navbar .logo {

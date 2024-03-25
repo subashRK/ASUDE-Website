@@ -1,10 +1,11 @@
-const observableEls = document.querySelectorAll(".hidden:not(.card)")
+const observableEls = document.querySelectorAll(".hidden")
 const navOpenerEl = document.querySelector(".nav-opener")
 const navLinksContainer = document.querySelector(".nav-links-container")
 const whyAsudeImageContEl = document.querySelector(
   "#whyasude .container .img-container"
 )
 const testimonialEl = document.querySelector("#testimonials")
+const cardEls = document.querySelectorAll(".card")
 
 // CAROUSEL
 {
@@ -89,30 +90,27 @@ navOpenerEl.onclick = () => navLinksContainer.classList.toggle("show", true)
 
 const observer = new IntersectionObserver(observerCallback)
 
-function checkForCards(entry, isIntersecting) {
-  if (!entry.target.classList.contains("card-container")) return false
-  ;[...entry.target.children].forEach((child, i) => {
-    if (!child.classList.contains("hidden")) return
-    child.style.setProperty("--child", i)
-    child.classList.toggle("show", isIntersecting)
+function changeCardsTransition() {
+  cardEls.forEach((child, i) => {
+    child.style.transitionDelay =
+      window.innerWidth < 1000 ? "0s" : 0.2 * i + "s"
   })
-
-  return true
 }
 
 function observerCallback(entries) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      if (checkForCards(entry, true)) return
       entry.target.classList.toggle("show", true)
     } else {
-      if (checkForCards(entry, false)) return
       entry.target.classList.toggle("show", false)
     }
   })
 }
 
 observableEls.forEach(el => observer.observe(el))
+
+changeCardsTransition()
+window.onresize = changeCardsTransition
 
 setInterval(() => {
   whyAsudeImageContEl.classList.toggle("show-top-img")
