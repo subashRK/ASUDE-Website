@@ -57,22 +57,13 @@ const cardEls = document.querySelectorAll(".card")
     changeSelected(currentCarouselItem, true)
     interval = setInterval(intervalHandler, INTERVAL_TIME)
   }
-
-  const handleResize = () => setCarousel(currentCarouselItem)
   // END OF FUNCTIONS
 
   // EVENT HANDLERS
   carouselItemChanger.onclick = handleClick
 
   const testimonialObserver = new IntersectionObserver(entries => {
-    if (!entries[0].isIntersecting) {
-      window.removeEventListener("resize", handleResize)
-      clearInterval(interval)
-      return
-    }
-
-    handleResize()
-    window.addEventListener("resize", handleResize)
+    if (!entries[0].isIntersecting) return clearInterval(interval)
     interval = setInterval(intervalHandler, INTERVAL_TIME)
   })
 
@@ -97,6 +88,11 @@ function changeCardsTransition() {
   })
 }
 
+function handleResize() {
+  setCarousel(currentCarouselItem)
+  changeCardsTransition()
+}
+
 function observerCallback(entries) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -110,7 +106,7 @@ function observerCallback(entries) {
 observableEls.forEach(el => observer.observe(el))
 
 changeCardsTransition()
-window.onresize = changeCardsTransition
+window.onresize = handleResize
 
 setInterval(() => {
   whyAsudeImageContEl.classList.toggle("show-top-img")
