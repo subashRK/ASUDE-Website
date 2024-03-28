@@ -524,6 +524,11 @@ main .supporting-img.hidden:not(.show) {
 }
 
 @media only screen and (max-width: 800px) {
+  #events .card {
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+
   #contact .content {
     flex-direction: column;
     align-items: flex-start;
